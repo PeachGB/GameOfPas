@@ -1,10 +1,14 @@
 program life;
 uses
-
 sysUtils, crt;
+
+const
+   ROWS	= 35;
+   COLS	= 35;
+
 type
    cell	= 0 .. 1;
-   grid	= array[0 .. 19, 0 .. 19] of cell;
+   grid	= array[0 .. ROWS-1, 0 .. COLS-1] of cell;
 
 function countNeighbours(a : grid;index,jindex : integer):integer;
 var i,j,n	: integer;
@@ -22,31 +26,46 @@ procedure gridState(var a :grid);
 var
    i,j,n: integer;
    begin
-      for i:= 0 to 19 do
-	 for j:= 0 to 19 do
+      for i:= 0 to ROWS do
+	 for j:= 0 to COLS do
 	       begin
-		  //live celln<2 dies.
 		  n:= countNeighbours(a,i,j);
 		  
-		  if(a[i][j]=1)and(n<2) then a[i][j]:= 0
-		     //live celln= 2|3 lives
-		  else if (a[i][j]=1) and ((n=2)or(n=3)) then a[i][j]:=1
-			//live celln>3 dies.
-		  else if (a[i][j]=1) and (n>3) then a[i][j]:=0
-		     
-		     //dead celln=3 live
+		  if (a[i][j]=1) and (n=2) then a[i][j]:=1
+		  else if (a[i][j]=1) and (n=3) then a[i][j]:=1
 		  else if (a[i][j]=0) and (n=3) then a[i][j]:=1
-		  else continue;
+		  else if (a[i][j]=1)then a[i][j]:=0
+		          	  else continue;
 	       end;
    end;
+
+procedure fillArrayCentRand(var a : grid;sqArea:integer);
+var
+   i, j : integer;
+    
+begin
+   for i:=0 to ROWS do
+      for j:=0 to COLS do
+      begin
+	 a[i][j]:=0;
+      end;
+      for i:=(ROWS DIV 2)-(sqArea DIV 2) to (ROWS DIV 2)+(sqArea DIV 2) do
+	 for j:=(ROWS DIV 2)-(sqArea DIV 2) to (ROWS DIV 2)+(sqArea DIV 2) do
+	 begin
+	    a[i][j]:= Random(2);
+	 end;
+   
+end;
+
+
 procedure fillArrayRand(var a: grid );
 var
    i, j : integer;
     
 begin
-   for i:=0 to 19 do
+   for i:=0 to ROWS do
    begin
-      for j:=0 to 19 do
+      for j:=0 to COLS do
 	 begin
 	    a[i][j]:=random(2);
 	 end;
@@ -57,9 +76,9 @@ procedure printArray(var a : grid);
 var
    i,j : integer;
 begin
-   for i:=0 to 19 do
+   for i:=0 to ROWS do
    begin
-      for j:=0 to 19 do
+      for j:=0 to COLS do
       begin
 	 write(a[i][j]);
       end;
@@ -73,7 +92,7 @@ var
    main_cell : cell;
 begin
    randomize();
-   fillarrayRand(main_grid);
+   fillarrayCentRand(main_grid,10);
    printarray(main_grid);
    while True do
       begin
