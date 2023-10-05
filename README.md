@@ -5,6 +5,8 @@ the procedure fillArrayCentRand(array,squareArea) will initialize every cell to 
 the unused procedure fillArrayRand(array) will initialize all the cells as random
 
 use fpc life.pas on the terminal to compile, then use ./life to initialize
+if you dont have free pascal you can download the compiler from here:
+FreePascalCompiler: https://www.freepascal.org/
 be aware that the code uses an infinite loop, so you should know how to interrupt the process on the terminal.
 
 
