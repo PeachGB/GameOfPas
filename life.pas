@@ -3,8 +3,8 @@ uses
 sysUtils, crt;
 
 const
-   ROWS	= 35-1;
-   COLS	= 35-1;
+   ROWS	= 60-1;
+   COLS	= 60-1;
 
 type
    cell	= 0 .. 1;
@@ -17,7 +17,7 @@ begin
    for i:= -1 to 1 do
       for j:= -1 to 1 do
 	 begin
-	    if not (i=0) and not (j=0) then 
+	     
 	       if (a[index+i][jindex+j]=1) then n:= n+1;
 	 end;
    countNeighbours:= n;
@@ -81,7 +81,8 @@ begin
    begin
       for j:=0 to COLS do
       begin
-	 write(a[i][j]);
+	 if (a[i][j] = 0) then write(' ')
+	     else write('#')
       end;
      
       writeln('');
@@ -93,7 +94,7 @@ var
    main_cell : cell;
 begin
    randomize();
-   fillarrayRand(main_grid);
+   fillarrayCentRand(main_grid,15);
    printarray(main_grid);
    while True do
       begin
