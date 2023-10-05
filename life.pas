@@ -3,12 +3,12 @@ uses
 sysUtils, crt;
 
 const
-   ROWS	= 35;
-   COLS	= 35;
+   ROWS	= 35-1;
+   COLS	= 35-1;
 
 type
    cell	= 0 .. 1;
-   grid	= array[0 .. ROWS-1, 0 .. COLS-1] of cell;
+   grid	= array[0 .. ROWS, 0 .. COLS] of cell;
 
 function countNeighbours(a : grid;index,jindex : integer):integer;
 var i,j,n	: integer;
@@ -17,7 +17,8 @@ begin
    for i:= -1 to 1 do
       for j:= -1 to 1 do
 	 begin
-	    if (a[index+i][jindex+j]=1) then n:= n+1;
+	    if not (i=0) and not (j=0) then 
+	       if (a[index+i][jindex+j]=1) then n:= n+1;
 	 end;
    countNeighbours:= n;
 end;
@@ -92,7 +93,7 @@ var
    main_cell : cell;
 begin
    randomize();
-   fillarrayCentRand(main_grid,10);
+   fillarrayRand(main_grid);
    printarray(main_grid);
    while True do
       begin
